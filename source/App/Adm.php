@@ -16,7 +16,7 @@ class Adm {
         echo $this->view->render("home",["eventName" => CONF_SITE_NAME]);
     }
 
-    public function  register(?array $data) :void {
+    public function register(?array $data) :void {
         $work = new Worker(
             null,
             "JukaTelecon",

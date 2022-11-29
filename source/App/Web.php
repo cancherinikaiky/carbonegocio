@@ -64,27 +64,6 @@ class Web {
             $client->create();
         }
     }
-<<<<<<< HEAD
-
-    public function getLoginRender(?array $data): void {
-        $client = new Client();
-        if(!$client->validate(
-            "jukinha@gmail.com",
-            "12345678"
-        )) {
-            $json = [
-                "message" => "nao logou"
-            ];
-            echo json_encode($json);
-            return;
-        }else {
-            $json = [
-                "message" => "logou"
-            ];
-            echo json_encode($json);
-            return;
-=======
-    
     public function postLoginClient(?array $data): void {
         if($data['email'] != "" && $data['password'] != ""){
             $client = new Client();
@@ -103,7 +82,6 @@ class Web {
                 $_SESSION['email'] = $data['email'];
                 return;
             }
->>>>>>> b7ebe80a58a9d44fe730c323e88a681a84fac59e
         }
 
         echo $this->view->render("login",["eventName" => CONF_SITE_NAME]);
