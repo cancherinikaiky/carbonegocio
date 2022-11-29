@@ -1,4 +1,4 @@
-<?php
+<?php //funcionando
 
 namespace Source\App;
 
@@ -17,6 +17,7 @@ class Adm {
         echo $this->view->render("home",["eventName" => CONF_SITE_NAME]);
     }
 
+<<<<<<< HEAD
     public function  register(?array $data) :void {
 
         if(!empty($data)) {
@@ -48,6 +49,25 @@ class Adm {
             ];
             echo json_encode($json);
             return;
+=======
+    public function register(?array $data) :void {
+        if (!in_array("",$data)) {
+            $work = new Worker(
+                null,
+                $data["companyName"],
+                $data["name"],   
+                $data["cpf"],
+                $data["email"], 
+                $data["phone"],
+                $data["descricao"],
+                $data["photo"],
+                $data["idCategory"]
+            );
+            $work->createWorkerCategory($work->create());
+            echo $this->view->render("register", ["eventName" => CONF_SITE_NAME]);
+        } else {
+            echo json_encode("Missing fields");   
+>>>>>>> e6098d3464a98d71158272fc6c55b2b53393d974
         }
 
         echo $this->view->render("register", ["eventName" => CONF_SITE_NAME]);

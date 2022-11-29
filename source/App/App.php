@@ -1,9 +1,10 @@
-<?php
+<?php //funcionando
 
 namespace Source\App;
 
 use League\Plates\Engine;
 use Sabberworm\CSS\CSSList\Document;
+use Source\Support\ValidateEvaluation;
 use Source\Models\Evaluation;
 use Source\Models\Worker;
 
@@ -34,20 +35,26 @@ class App {
   }
 
   public function sendEvaluation(?array $data) {
-    if ($data.lenght < 6) {
+    if (!in_array("",$data)) {
       $evaluation = new Evaluation(
         null,
-        $data["id_worker"], 
-        $data["id_client"], 
+        $data["id_worker"],
+        $data["id_client"],
         $data["tittle"],
-        $data["service"], 
+        $data["service"],
         $data["txt"],
-        $data["date"] 
+        $data["date"]
       );
-     $evaluation->create();
-     echo json_encode("Success");
+      $evaluation->create();
+      echo json_encode([
+        "message" => "success",
+        "type" => "warning"
+      ]);
     } else {
-      echo json_encode("Missing fields");
+      echo json_encode([
+        "message" => "error",
+        "type" => "warning"
+      ]);
     }
   }
 
