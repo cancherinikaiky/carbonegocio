@@ -98,30 +98,29 @@ class Worker {
 
         if($stmt->rowCount() == 0) {
             return false;
+        }else {
+            return $stmt->fetchAll();
         }
-
-        $worker = $stmt->fetch();
-
-        $this->id = $worker->id;
-        $this->company_name = $worker->company_name;
-        $this->name = $worker->name;
-        $this->cpf = $worker->cpf;
-        $this->email = $worker->email;
-        $this->phone = $worker->phone;
-        $this->description = $worker->description;
-        $this->photo = $worker->photo;
-
-            $json = [
-                "id" => $this->id,
-                "company_name" => $this->company_name,
-                "name" => $this->name,
-                "cpf" => $this->cpf,
-                "email" => $this->email,
-                "phone" => $this->phone,
-                "description" => $this->description,
-                "photo" => $this->photo
-            ];
-            return $json;
+//        $this->id = $worker->id;
+//        $this->company_name = $worker->company_name;
+//        $this->name = $worker->name;
+//        $this->cpf = $worker->cpf;
+//        $this->email = $worker->email;
+//        $this->phone = $worker->phone;
+//        $this->description = $worker->description;
+//        $this->photo = $worker->photo;
+//
+//            $json = [
+//                "id" => $this->id,
+//                "company_name" => $this->company_name,
+//                "name" => $this->name,
+//                "cpf" => $this->cpf,
+//                "email" => $this->email,
+//                "phone" => $this->phone,
+//                "description" => $this->description,
+//                "photo" => $this->photo
+//            ];
+//            return $json;
     }
 
     public function getId() {
