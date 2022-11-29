@@ -86,6 +86,13 @@ class Client
         $this->email = $client->email;
         $this->password = $client->password;
 
+        $arrayClient = [
+            "id" => $this->id,
+            "email" => $this->email
+        ];
+
+        $_SESSION["client"] = $arrayClient;
+
         return true;
     }
 

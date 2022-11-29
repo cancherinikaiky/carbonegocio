@@ -63,7 +63,7 @@ class Web {
         $client = new Client();
         if(!$client->validate(
             "jukinha@gmail.com",
-            "1234678"
+            "12345678"
         )) {
             $json = [
                 "message" => "nao logou"

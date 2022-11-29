@@ -8,6 +8,10 @@ class App {
   private $view;
 
   public function __construct() {
+      session_start();
+      if(empty($_SESSION["client"])) {
+          header("Location:http://www.localhost/tecstart/logar");
+      }
     $this->view = new Engine(CONF_VIEW_APP,'php');
   }
 
@@ -21,7 +25,6 @@ class App {
 
   public function getLogout(): void {
     session_destroy();
-    setcookie("user", "Logado", time() - 3600, "/");
     header("Location:http://www.localhost/tecstart/logar");
   }
 }
