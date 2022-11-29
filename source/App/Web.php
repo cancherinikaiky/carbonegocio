@@ -71,7 +71,6 @@ class Web {
             $client->create();
         }
     }
-<<<<<<< HEAD
 
     public function getLoginRender(?array $data): void
     {
@@ -93,9 +92,7 @@ class Web {
             return;
         }
     }
-=======
-    
->>>>>>> 0f819a77de986e81e812272d05a072eb74b36394
+
     public function postLoginClient(?array $data): void {
         if($data['email'] != "" && $data['password'] != ""){
             $client = new Client();

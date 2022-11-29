@@ -7,7 +7,10 @@
 </h1>
 
 <?php
-var_dump($categories);
+//var_dump($categories);
+foreach ($workers as $work) {
+    echo $work->photo;
+}
     foreach ($workers as $work) {
         ?>
         <a href="<?= url("perfil/{$work->id}") ?>">teste</a>

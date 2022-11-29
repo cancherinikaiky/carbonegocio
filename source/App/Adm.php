@@ -4,6 +4,7 @@ namespace Source\App;
 
 use League\Plates\Engine;
 use Source\Models\Worker;
+use CoffeeCode\Uploader\Image;
 
 class Adm {
     private $view;
@@ -17,22 +18,38 @@ class Adm {
     }
 
     public function  register(?array $data) :void {
-        if ($data.lenght < 7) {
-            $work = new Worker(
+
+        if(!empty($data)) {
+            if(in_array("", $data)) {
+                $json = [
+                    "messasge" => "Preencha todos os campos",
+                    "type" => "warning"
+                ];
+            }
+
+            $upload = uploadImage($_FILES['photo']);
+
+            $workers = new Worker(
                 null,
-                $data["companyName"], 
-                $data["name"],   
-                $data["cpf"], 
-                $data["email"], 
-                $data["phone"], 
-                $data["descricao"], 
-                $data["photo"] 
+                $data["company_name"],
+                $data["name"],
+                $data["cpf"],
+                $data["email"],
+                $data["phone"],
+                $data["description"],
+                $upload,
+                6
             );
 
-            $work->createWorkerCategory($work->create());
-            echo $this->view->render("register", ["eventName" => CONF_SITE_NAME]);
-        } else {
-            echo json_encode("Missing fields");   
+            $workers->createWorkerCategory($workers->create());
+
+            $json = [
+                "message" => "cadastrado"
+            ];
+            echo json_encode($json);
+            return;
         }
+
+        echo $this->view->render("register", ["eventName" => CONF_SITE_NAME]);
     }
 }

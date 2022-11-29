@@ -48,6 +48,7 @@ $route->group("/admin");
 $route->get("/", "Adm:getHomeRender");
 $route->get("/home", "Adm:getHomeRender");
 
+$route->get("/registro", "Adm:register");
 $route->post("/registro", "Adm:register");
 
 $route->group(null);
