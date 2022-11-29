@@ -1,4 +1,4 @@
-<?php
+<?php //funcionando
 
 namespace Source\App;
 
@@ -16,19 +16,19 @@ class Adm {
         echo $this->view->render("home",["eventName" => CONF_SITE_NAME]);
     }
 
-    public function  register(?array $data) :void {
-        if ($data.lenght < 7) {
+    public function register(?array $data) :void {
+        if (!in_array("",$data)) {
             $work = new Worker(
                 null,
-                $data["companyName"], 
+                $data["companyName"],
                 $data["name"],   
-                $data["cpf"], 
+                $data["cpf"],
                 $data["email"], 
-                $data["phone"], 
-                $data["descricao"], 
-                $data["photo"] 
+                $data["phone"],
+                $data["descricao"],
+                $data["photo"],
+                $data["idCategory"]
             );
-
             $work->createWorkerCategory($work->create());
             echo $this->view->render("register", ["eventName" => CONF_SITE_NAME]);
         } else {
