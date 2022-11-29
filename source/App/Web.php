@@ -4,6 +4,7 @@ namespace Source\App;
 
 use League\Plates\Engine;
 use Source\Models\Category;
+use Source\Models\Client;
 use Source\Models\Worker;
 
 class Web {
@@ -45,11 +46,38 @@ class Web {
         echo $this->view->render("register",["eventName" => CONF_SITE_NAME]);
     }
 
-    public function postRegisterClient(): void {
-        // função pra cadastrar usuário
+    public function postRegisterClient(?array $data): void {
+        $cliente = new Client(
+            null,
+            "jukão",
+            "do trago",
+            "11111111111",
+            "jukinha@gmail.com",
+            "12345678"
+        );
+
+        $cliente->create();
     }
 
-    public function getLoginRender(): void {
+    public function getLoginRender(?array $data): void {
+        $client = new Client();
+        if(!$client->validate(
+            "jukinha@gmail.com",
+            "1234678"
+        )) {
+            $json = [
+                "message" => "nao logou"
+            ];
+            echo json_encode($json);
+            return;
+        }else {
+            $json = [
+                "message" => "logou"
+            ];
+            echo json_encode($json);
+            return;
+        }
+
         echo $this->view->render("login",["eventName" => CONF_SITE_NAME]);
     }
 

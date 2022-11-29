@@ -8,10 +8,6 @@ class App {
   private $view;
 
   public function __construct() {
-//    if(empty($_SESSION["user"]) || empty($_COOKIE["user"])){
-//      header("Location:http://www.localhost/made-by-me/login");
-//    }
-
     $this->view = new Engine(CONF_VIEW_APP,'php');
   }
 
