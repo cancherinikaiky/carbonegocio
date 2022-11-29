@@ -52,6 +52,43 @@ class Client
         return true;
     }
 
+    public function findById() {
+        $query = "SELECT * FROM clients WHERE id = :id";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":id", $this->id);
+        $stmt->execute();
+
+        if($stmt->rowCount() == 0) {
+            return false;
+        }else {
+            return $stmt->fetchAll();
+        }
+    }
+
+    public function validate(string $email, string $password) {
+        $query = "SELECT * FROM clients WHERE email LIKE :email";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+
+        if($stmt->rowCount() == 0) {
+            return 0;
+        }else {
+            $client = $stmt->fetch();
+            if(!password_verify($password, $client->password)) {
+                return false;
+            }
+        }
+
+        $this->id = $client->id;
+        $this->name = $client->name;
+        $this->cpf = $client->cpf;
+        $this->email = $client->email;
+        $this->password = $client->password;
+
+        return true;
+    }
+
     public function getId()
     {
         return $this->id;

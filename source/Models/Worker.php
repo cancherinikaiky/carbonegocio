@@ -2,6 +2,7 @@
 
 namespace Source\Models;
 
+use MongoDB\Driver\WriteConcern;
 use Source\Core\Connect;
 
 class Worker {
@@ -35,12 +36,12 @@ class Worker {
         $this->email = $email;
         $this->phone = $phone;
         $this->description = $description;
-        $this->phone = $photo;
+        $this->photo = $photo;
         $this->idCategory = $idCategory;
     }
 
     public function create(){
-        $query = "INSERT INTO workers (company_name, name, cpf, email, phone, description, photo) VALUES (:company_name, :name, :phone, :description, :photo)";
+        $query = "INSERT INTO workers (company_name, name, cpf, email, phone, description, photo) VALUES (:company_name, :name, :cpf, :email, :phone, :description, :photo)";
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->bindParam(":company_name", $this->company_name);
         $stmt->bindParam(":name", $this->name);
@@ -54,10 +55,10 @@ class Worker {
         return Connect::getInstance()->lastInsertId();
     }
 
-    public function createWorkerCategory() {
+    public function createWorkerCategory($idWorker) {
         $query = "INSERT INTO worker_categories (id_worker, id_category) VALUES (:id_worker, :id_category)";
         $stmt = Connect::getInstance()->prepare($query);
-        $stmt->bindParam(":id_worker", $this->id);
+        $stmt->bindParam(":id_worker", $idWorker);
         $stmt->bindParam(":id_category", $this->idCategory);
 
         $stmt->execute();
@@ -65,7 +66,7 @@ class Worker {
     }
 
     public function selectAll() {
-        $query = "SELECT * FROM morkers";
+        $query = "SELECT * FROM workers";
         $stmt = Connect::getInstance()->prepare($query);
         $stmt->execute();
 
@@ -74,6 +75,53 @@ class Worker {
         }else {
             return $stmt->fetchAll();
         }
+    }
+
+    public function findByIdWorker($id) {
+        $query = "SELECT * FROM worker_categories WHERE id = :id";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        if($stmt->rowCount() == 0) {
+            return false;
+        }else {
+            return $stmt->fetchAll();
+        }
+    }
+
+    public function findById($id) {
+        $query = "SELECT * FROM workers WHERE id = :id";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+
+        if($stmt->rowCount() == 0) {
+            return false;
+        }
+
+        $worker = $stmt->fetch();
+
+        $this->id = $worker->id;
+        $this->company_name = $worker->company_name;
+        $this->name = $worker->name;
+        $this->cpf = $worker->cpf;
+        $this->email = $worker->email;
+        $this->phone = $worker->phone;
+        $this->description = $worker->description;
+        $this->photo = $worker->photo;
+
+            $json = [
+                "id" => $this->id,
+                "company_name" => $this->company_name,
+                "name" => $this->name,
+                "cpf" => $this->cpf,
+                "email" => $this->email,
+                "phone" => $this->phone,
+                "description" => $this->description,
+                "photo" => $this->photo
+            ];
+            return $json;
     }
 
     public function getId() {

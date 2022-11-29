@@ -1,13 +1,13 @@
-CREATE DATABASE IF NOT EXISTS `bd_tecStart`;
-USE `bd_tecStart`;
+CREATE DATABASE IF NOT EXISTS `bd_tecstart`;
+USE `bd_tecstart`;
 
 CREATE TABLE IF NOT EXISTS `workers` (
     `id` int(11) NOT NULL AUTO_INCREMENT,
     `company_name` VARCHAR(50),
     `name` VARCHAR(50) NOT NULL,
-    `cpf` int(11) NOT NULL,
+    `cpf` VARCHAR(50) NOT NULL,
     `email` VARCHAR(100) NOT NULL,
-    `phone` int(20) NOT NULL,
+    `phone` VARCHAR(50) NOT NULL,
     `description` VARCHAR(100) NOT NULL,
     `photo` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`id`)

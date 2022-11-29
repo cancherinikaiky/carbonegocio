@@ -25,7 +25,7 @@ $route->post("/registrar","Web:postRegisterClient");
 $route->get("/logar","Web:getLoginRender");
 $route->post("/logar","Web:postLoginClient");
 
-$route->get("/perfil", "Web:getProfileRender");
+$route->get("/perfil/{idWorker}", "Web:getProfileRender");
 
 // APP ROUTES
 
@@ -47,6 +47,8 @@ $route->group("/admin");
 
 $route->get("/", "Adm:getHomeRender");
 $route->get("/home", "Adm:getHomeRender");
+
+$route->get("/registro", "Adm:register");
 
 $route->group(null);
 

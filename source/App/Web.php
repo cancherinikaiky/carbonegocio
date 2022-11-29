@@ -3,12 +3,19 @@
 namespace Source\App;
 
 use League\Plates\Engine;
+use Source\Models\Category;
+use Source\Models\Worker;
 
 class Web {
     private $view;
+    private $workers;
+    private $category;
 
     public function __construct() {
         $this->view = new Engine(CONF_VIEW_WEB,'php');
+        $this->workers = new Worker();
+
+        $this->category = new Category();
     }
 
     public function getAboutRender(): void {
@@ -16,11 +23,22 @@ class Web {
     }
 
     public function getHomeRender(): void {
-        echo $this->view->render("home",["eventName" => CONF_SITE_NAME]);
+        echo $this->view->render("home",[
+            "eventName" => CONF_SITE_NAME,
+            "workers" => $this->workers->selectAll()
+            ]);
     }
 
-    public function getProfileRender(): void {
-        echo $this->view->render("profile",["eventName" => CONF_SITE_NAME]);
+    public function getProfileRender(?array $data): void {
+        if(!empty($data)) {
+            $this->workers->findById($data["idWorker"]);
+            $this->category->findById($data["idWorker"]);
+        }
+        echo $this->view->render("profile",[
+            "eventName" => CONF_SITE_NAME,
+            "worker" => $this->workers,
+            "category" => $this->category
+        ]);
     }
 
     public function getRegisterRender(): void {

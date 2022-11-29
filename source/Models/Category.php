@@ -26,9 +26,17 @@ class Category {
 
         if($stmt->rowCount() == 0) {
             return false;
-        }else {
-            return $stmt->fetchAll();
         }
+        $category = $stmt->fetch();
+        $this->id = $category->id;
+        $this->field = $category->field;
+
+        $json = [
+            "id" => $this->id,
+            "field" => $this->field
+        ];
+
+        return $json;
     }
 
 
