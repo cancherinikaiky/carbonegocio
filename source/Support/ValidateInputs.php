@@ -1,6 +1,7 @@
 <?php namespace Source\Support;
     require './source/Support/ValidaCPFCNPJ.php';
     use Source\Support;
+    use Source\Models\Client;
 
     class ValidateInputs {
         function __construct(){}
@@ -42,7 +43,7 @@
             }    
 
             if(isset($_POST['email'])){
-                if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+                if(!Client::validateEmail($_POST['email'])){
                     echo json_encode([
                         "message" => "o email inserido é inválido",
                         "type" => "warning"
