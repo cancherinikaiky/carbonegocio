@@ -57,10 +57,10 @@ class Evaluation
         return true;
     }
 
-    public function findByIdClient() {
+    public function findByIdWorker($id_worker) {
         $query = "SELECT * FROM evaluations WHERE id_worker = :id_worker";
         $stmt = Connect::getInstance()->prepare($query);
-        $stmt->bindParam(":id_worker", $this->id_worker);
+        $stmt->bindParam(":id_worker", $id_worker);
         $stmt->execute();
 
         if($stmt->rowCount() == 0) {

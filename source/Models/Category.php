@@ -18,6 +18,14 @@ class Category {
         $this->field = $field;
     }
 
+    public function selectAll() {
+        $query = "SELECT * FROM categories";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
     public function findById($id) {
         $query = "SELECT * FROM categories WHERE id = :id";
         $stmt = Connect::getInstance()->prepare($query);
@@ -26,17 +34,9 @@ class Category {
 
         if($stmt->rowCount() == 0) {
             return false;
+        }else {
+            return $stmt->fetch();
         }
-        $category = $stmt->fetch();
-        $this->id = $category->id;
-        $this->field = $category->field;
-
-        $json = [
-            "id" => $this->id,
-            "field" => $this->field
-        ];
-
-        return $json;
     }
 
 

@@ -6,6 +6,7 @@ require "./source/autoload.php";
 use League\Plates\Engine;
 use Source\Models\Category;
 use Source\Models\Client;
+use Source\Models\Evaluation;
 use Source\Models\Worker;
 use Source\Support\ValidateInputs;
 
@@ -13,12 +14,15 @@ class Web {
     private $view;
     private $workers;
     private $category;
+    private $evaluations;
 
     public function __construct() {
         $this->view = new Engine(CONF_VIEW_WEB,'php');
         $this->workers = new Worker();
 
         $this->category = new Category();
+
+        $this->evaluations = new Evaluation();
     }
 
     public function getAboutRender(): void {
@@ -28,19 +32,22 @@ class Web {
     public function getHomeRender(): void {
         echo $this->view->render("home",[
             "eventName" => CONF_SITE_NAME,
-            "workers" => $this->workers->selectAll()
+            "workers" => $this->workers->selectAll(),
+            "categories" => $this->category->selectAll()
             ]);
     }
 
     public function getProfileRender(?array $data): void {
         if(!empty($data)) {
-            $this->workers->findById($data["idWorker"]);
-            $this->category->findById($data["idWorker"]);
+            var_dump($this->workers->findById($data["idWorker"]));
+            var_dump($this->category->findById($data["idWorker"]));
+            var_dump($this->evaluations->findByIdWorker($data["idWorker"]));
         }
         echo $this->view->render("profile",[
             "eventName" => CONF_SITE_NAME,
             "worker" => $this->workers,
-            "category" => $this->category
+            "category" => $this->category,
+            "evaluation" => $this->evaluations
         ]);
     }
 
@@ -64,7 +71,31 @@ class Web {
             $client->create();
         }
     }
+<<<<<<< HEAD
+
+    public function getLoginRender(?array $data): void
+    {
+        $client = new Client();
+        if (!$client->validate(
+            "jukinha@gmail.com",
+            "12345678"
+        )) {
+            $json = [
+                "message" => "nao logou"
+            ];
+            echo json_encode($json);
+            return;
+        } else {
+            $json = [
+                "message" => "logou"
+            ];
+            echo json_encode($json);
+            return;
+        }
+    }
+=======
     
+>>>>>>> 0f819a77de986e81e812272d05a072eb74b36394
     public function postLoginClient(?array $data): void {
         if($data['email'] != "" && $data['password'] != ""){
             $client = new Client();
@@ -79,7 +110,7 @@ class Web {
                     "message" => "logou"
                 ];
                 echo json_encode($json);
-                $SESSION_START;
+                session_start();
                 $_SESSION['email'] = $data['email'];
                 return;
             }
