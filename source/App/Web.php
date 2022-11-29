@@ -64,6 +64,7 @@ class Web {
             $client->create();
         }
     }
+    
     public function postLoginClient(?array $data): void {
         if($data['email'] != "" && $data['password'] != ""){
             $client = new Client();

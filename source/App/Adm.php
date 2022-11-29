@@ -16,21 +16,23 @@ class Adm {
         echo $this->view->render("home",["eventName" => CONF_SITE_NAME]);
     }
 
-    public function register(?array $data) :void {
-        $work = new Worker(
-            null,
-            "JukaTelecon",
-            "juinha",
-            "11111111111",
-            "jukinha@gmail.com",
-            "99999999",
-            "descricao",
-            "photo",
-            3
-        );
+    public function  register(?array $data) :void {
+        if ($data.lenght < 7) {
+            $work = new Worker(
+                null,
+                $data["companyName"], 
+                $data["name"],   
+                $data["cpf"], 
+                $data["email"], 
+                $data["phone"], 
+                $data["descricao"], 
+                $data["photo"] 
+            );
 
-        $work->createWorkerCategory($work->create());
-
-        echo $this->view->render("register", ["eventName" => CONF_SITE_NAME]);
+            $work->createWorkerCategory($work->create());
+            echo $this->view->render("register", ["eventName" => CONF_SITE_NAME]);
+        } else {
+            echo json_encode("Missing fields");   
+        }
     }
 }

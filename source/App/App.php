@@ -33,19 +33,22 @@ class App {
     ]);
   }
 
-  public function sendEvaluate(?array $data) {
+  public function sendEvaluation(?array $data) {
+    if ($data.lenght < 6) {
       $evaluation = new Evaluation(
-          null,
-          2,
-          "1",
-          "Troca de lâmpada",
-          "Troca de lâmpada",
-          "txt",
-          "29/11/2022"
+        null,
+        $data["id_worker"], 
+        $data["id_client"], 
+        $data["tittle"],
+        $data["service"], 
+        $data["txt"],
+        $data["date"] 
       );
-
-      $evaluation->create();
-
+     $evaluation->create();
+     echo json_encode("Success");
+    } else {
+      echo json_encode("Missing fields");
+    }
   }
 
   public function getLogout(): void {
