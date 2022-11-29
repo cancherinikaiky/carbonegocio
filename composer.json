@@ -1,0 +1,46 @@
+{
+  "name": "jeremiaspiontkoski/tecstart",
+  "description": "Estrutura base com router e MVC",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Kaiky Cancherini",
+      "email": "kaikyfillipo@gmail.com",
+      "homepage": "https://www.ifsul.edu.br",
+      "role": "UX/UI Designer"
+    },{
+      "name": "Jeremias Piontkoski",
+      "email": "jeremias@gmail.com",
+      "homepage": "https://www.ifsul.edu.br",
+      "role": "Developer"
+    },{
+      "name": "Marcelo Oliveira",
+      "email": "marcelo@gmail.com",
+      "homepage": "https://www.ifsul.edu.br",
+      "role": "Developer"
+    },{
+      "name": "Vinicius Antunes",
+      "email": "vinicius@gmail.com",
+      "homepage": "https://www.ifsul.edu.br",
+      "role": "Developer"
+    }
+  ],
+  "config": {
+    "vendor-dir": "vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "Source\\": "source/"
+    },
+    "files": [
+      "source/Boot/Config.php",
+      "source/Boot/Helpers.php"
+    ]
+  },
+  "require": {
+    "dompdf/dompdf": "^2.0",
+    "coffeecode/router": "1.0.8",
+    "coffeecode/uploader": "1.0.11",
+    "league/plates": "v3.4.0"
+  }
+}
