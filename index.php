@@ -37,7 +37,7 @@ $route->get("/home", "App:getHomeRender");
 $route->get("/sair","App:getLogout");
 
 $route->get("/perfil/avaliar", "App:getEvaluateRender");
-$route->post("/perfil/avaliar", "App:sendEvaluate");
+$route->post("/perfil/avaliar", "App:sendEvaluation");
 
 $route->group(null);
 
@@ -48,7 +48,7 @@ $route->group("/admin");
 $route->get("/", "Adm:getHomeRender");
 $route->get("/home", "Adm:getHomeRender");
 
-$route->get("/registro", "Adm:register");
+$route->post("/registro", "Adm:register");
 
 $route->group(null);
 
