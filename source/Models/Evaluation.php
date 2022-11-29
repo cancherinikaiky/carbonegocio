@@ -44,7 +44,17 @@ class Evaluation
     }
 
     public function create() {
+        $query = "INSERT INTO evaluations (id_worker, id_client, title, service, text, date) VALUES  (:id_worker, :id_client, :title, :service, :text, :date)";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":id_worker", $this->id_worker);
+        $stmt->bindParam(":id_client", $this->id_client);
+        $stmt->bindParam(":title", $this->title);
+        $stmt->bindParam(":service", $this->service);
+        $stmt->bindParam(":text", $this->text);
+        $stmt->bindParam(":date", $this->date);
+        $stmt->execute();
 
+        return true;
     }
 
     public function findByIdClient() {

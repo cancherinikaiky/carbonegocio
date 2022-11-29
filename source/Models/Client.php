@@ -65,6 +65,19 @@ class Client
         }
     }
 
+    public static function validateEmail(string $email) {
+        $query = "SELECT * FROM clients WHERE email = :email";
+        $stmt = Connect::getInstance()->prepare($query);
+        $stmt->bindParam(":email", $email);
+        $stmt->execute();
+
+        if ($stmt->rowCount() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function validate(string $email, string $password) {
         $query = "SELECT * FROM clients WHERE email LIKE :email";
         $stmt = Connect::getInstance()->prepare($query);

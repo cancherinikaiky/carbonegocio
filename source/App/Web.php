@@ -2,10 +2,12 @@
 
 namespace Source\App;
 
+require "./source/autoload.php";
 use League\Plates\Engine;
 use Source\Models\Category;
 use Source\Models\Client;
 use Source\Models\Worker;
+use Source\Support\ValidateInputs;
 
 class Web {
     private $view;
@@ -46,18 +48,23 @@ class Web {
         echo $this->view->render("register",["eventName" => CONF_SITE_NAME]);
     }
 
-    public function postRegisterClient(?array $data): void {
-        $cliente = new Client(
-            null,
-            "jukão",
-            "do trago",
-            "11111111111",
-            "jukinha@gmail.com",
-            "12345678"
-        );
-
-        $cliente->create();
+    public function postRegisterClient(): void {
+        header('Content-Type: application/json;');
+        $validate = new ValidateInputs();
+        if($validate->Inputs()) {
+            $client = new Client(
+                NULL,
+                $_POST['name'],
+                $_POST['lastName'],
+                $_POST['cpf'],
+                $_POST['email'],
+                $_POST['password']
+            );
+            echo json_encode("inserido com sucesso");
+            $client->create();
+        }
     }
+<<<<<<< HEAD
 
     public function getLoginRender(?array $data): void {
         $client = new Client();
@@ -76,6 +83,27 @@ class Web {
             ];
             echo json_encode($json);
             return;
+=======
+    
+    public function postLoginClient(?array $data): void {
+        if($data['email'] != "" && $data['password'] != ""){
+            $client = new Client();
+            if(!$client->validate($data['email'], $data['password'])) {
+                $json = [
+                    "message" => "não logou"
+                ];
+                echo json_encode($json);
+                return;
+            }else {
+                $json = [
+                    "message" => "logou"
+                ];
+                echo json_encode($json);
+                $SESSION_START;
+                $_SESSION['email'] = $data['email'];
+                return;
+            }
+>>>>>>> b7ebe80a58a9d44fe730c323e88a681a84fac59e
         }
 
         echo $this->view->render("login",["eventName" => CONF_SITE_NAME]);
